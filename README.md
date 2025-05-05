@@ -1,3 +1,8 @@
+
+<p align="center">
+  <img src="https://capsule-render.vercel.app/api?text=Melodify♬⋆.˚&animation=fadeIn&type=waving&color=gradient&height=100"/>
+</p>
+
 # 🎧 Melodify - A Full-Stack Spotify Clone
 
 Melodify is a full-featured music streaming web application inspired by Spotify, built with the **MERN** stack. It offers real-time interactions, media management, an admin dashboard, and a modern, responsive UI using the latest web technologies.
@@ -96,5 +101,7 @@ melodify/
 ```
 
 📄 License
+
+
 This project is for educational purposes and does not include any licensed commercial content.
 You are free to modify and reuse the code under the MIT License.
