@@ -1,6 +1,6 @@
 
 <p align="center">
-  <img src="https://capsule-render.vercel.app/api?text=Melodify♬⋆.˚&animation=fadeIn&type=waving&color=gradient&height=100"/>
+  <img src="https://capsule-render.vercel.app/api?text=Melodify♬⋆˚ᯤ&animation=fadeIn&type=waving&color=gradient&height=100"/>
 </p>
 
 # 🎧 Melodify - A Full-Stack Spotify Clone
