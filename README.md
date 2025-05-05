@@ -52,10 +52,10 @@ Melodify is a full-featured music streaming web application inspired by Spotify,
 ```bash
 git clone https://github.com/yourusername/melodify.git
 cd melodify
+```
+
 2. Install dependencies
-bash
-Copy
-Edit
+```bash
 # For backend
 cd server
 npm install
@@ -63,6 +63,8 @@ npm install
 # For frontend
 cd ../client
 npm install
+```
+
 3. Create .env files
 Set up environment variables for both backend and frontend. Include keys for:
 
@@ -75,9 +77,7 @@ Cloudinary credentials
 Socket.io config
 
 4. Start the app
-bash
-Copy
-Edit
+```bash
 # Start backend
 cd server
 npm run dev
@@ -85,11 +85,12 @@ npm run dev
 # Start frontend
 cd ../client
 npm run dev
+
+```
 📂 Project Structure
-bash
-Copy
-Edit
+```bash
 melodify/
 ├── client/         # React frontend (Vite)
 ├── server/         # Express backend
 ├── README.md
+```
