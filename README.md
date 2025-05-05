@@ -94,3 +94,7 @@ melodify/
 ├── server/         # Express backend
 ├── README.md
 ```
+
+📄 License
+This project is for educational purposes and does not include any licensed commercial content.
+You are free to modify and reuse the code under the MIT License.
