@@ -1,4 +1,4 @@
-import Topbar from "@/components/ui/Topbar"
+import Topbar from "@/components/ui/Topbar";
 import { useMusicStore } from "@/stores/useMusicStore";
 import { useEffect } from "react";
 import FeaturedSection from "./components/FeaturedSection";
@@ -15,6 +15,7 @@ const HomePage = () => {
         madeForYouSongs,
         featuredSongs,
         trendingSongs,
+        searchResults
     } = useMusicStore();
 
     const { initializeQueue } = usePlayerStore();
@@ -37,13 +38,33 @@ const HomePage = () => {
             <Topbar />
             <ScrollArea className='h-[calc(100vh-180px)]'>
                 <div className="p-4 sm:p-6">
-                    <h1 className="text-2x1 sm:text-3x1 font-bold mb-6">Good Afternoon</h1>
-                    <FeaturedSection />
-
-                    <div className="space-y-8">
-                      <SectionGrid title="Made For You" songs={madeForYouSongs} isLoading={isLoading} />
-                      <SectionGrid title="Trending" songs={trendingSongs} isLoading={isLoading} />
-                    </div>
+                    {searchResults.length > 0 ? (
+                        <>
+                            <h1 className="text-2xl sm:text-3xl font-bold mb-6">Search Results</h1>
+                            <SectionGrid 
+                                title="Search Results"  // Added title prop
+                                songs={searchResults} 
+                                isLoading={isLoading} 
+                            />
+                        </>
+                    ) : (
+                        <>
+                            <h1 className="text-2xl sm:text-3xl font-bold mb-6">Good Afternoon</h1>
+                            <FeaturedSection />
+                            <div className="space-y-8">
+                                <SectionGrid 
+                                    title="Made For You" 
+                                    songs={madeForYouSongs} 
+                                    isLoading={isLoading} 
+                                />
+                                <SectionGrid 
+                                    title="Trending" 
+                                    songs={trendingSongs} 
+                                    isLoading={isLoading} 
+                                />
+                            </div>
+                        </>
+                    )}
                 </div>
             </ScrollArea>
         </main>
