@@ -228,10 +228,15 @@ export const usePlayerStore = create<PlayerStore>((set, get) => ({
       currentIndex: -1,
       isPlaying: false
     });
-    localStorage.removeItem('playerState');
+    localStorage.removeItem('playerState');  // Clear saved state on reset
   },
 
   restorePlayerState: (currentSong, queue, currentIndex, isPlaying) => {
+    // Defensive: prevent autoplay without a currentSong
+    if (isPlaying && !currentSong) {
+      isPlaying = false;
+    }
+
     set({
       currentSong,
       queue: queue || [],

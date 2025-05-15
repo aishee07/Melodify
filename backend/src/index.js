@@ -16,6 +16,7 @@ import authRoutes from './routes/auth.route.js';
 import songRoutes from './routes/song.route.js';
 import albumRoutes from './routes/album.route.js';
 import statRoutes from './routes/stat.route.js';
+import paymentRoutes from './routes/payment.route.js';
 
 dotenv.config();
 
@@ -53,6 +54,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/songs', songRoutes);
 app.use('/api/albums', albumRoutes);
 app.use('/api/stats', statRoutes);
+app.use('/api/payment', paymentRoutes);
 
 // Error handler
 app.use((err, req, res, next) => {

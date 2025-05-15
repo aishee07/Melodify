@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { useAuth } from "@clerk/clerk-react";
+import { useAuth, useUser } from "@clerk/clerk-react";
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
 import { axiosInstance } from "@/lib/axios";
@@ -7,14 +7,17 @@ import { toast } from "react-hot-toast";
 
 const PremiumButton = () => {
   const { isSignedIn } = useAuth();
+  const { user } = useUser();
   const [isLoading, setIsLoading] = useState(false);
 
   const handleUpgrade = async () => {
     try {
       setIsLoading(true);
-      const response = await axiosInstance.post("/api/payment/create-checkout-session");
-      
-      // Directly redirect to Stripe
+
+      const response = await axiosInstance.post("/payment/create-checkout-session", {
+        email: user?.primaryEmailAddress?.emailAddress,
+      });
+
       window.location.href = response.data.url;
     } catch (error) {
       console.error("Payment error:", error);
