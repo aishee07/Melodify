@@ -38,14 +38,14 @@ export const usePlayerStore = create<PlayerStore>((set, get) => ({
 
   initializeQueue: (songs: Song[]) => {
     if (songs.length === 0) return;
-    
+
     set({
       queue: songs,
       currentSong: songs[0],
       currentIndex: 0,
       isPlaying: true
     });
-    
+
     const socket = useChatStore.getState().socket;
     if (socket?.auth) {
       socket.emit("update_activity", {
@@ -57,21 +57,21 @@ export const usePlayerStore = create<PlayerStore>((set, get) => ({
 
   playAlbum: (songs: Song[], startIndex = 0) => {
     if (songs.length === 0) return;
-    
-    const shuffledSongs = get().isShuffling 
-      ? [...songs].sort(() => Math.random() - 0.5) 
+
+    const shuffledSongs = get().isShuffling
+      ? [...songs].sort(() => Math.random() - 0.5)
       : songs;
-    
+
     const adjustedIndex = Math.min(startIndex, shuffledSongs.length - 1);
     const song = shuffledSongs[adjustedIndex];
-    
+
     set({
       queue: shuffledSongs,
       currentSong: song,
       currentIndex: adjustedIndex,
       isPlaying: true,
     });
-    
+
     const socket = useChatStore.getState().socket;
     if (socket?.auth) {
       socket.emit("update_activity", {
@@ -86,7 +86,7 @@ export const usePlayerStore = create<PlayerStore>((set, get) => ({
 
     const socket = useChatStore.getState().socket;
     const songIndex = get().queue.findIndex((s) => s._id === song._id);
-    
+
     set({
       currentSong: song,
       isPlaying: true,
@@ -125,15 +125,15 @@ export const usePlayerStore = create<PlayerStore>((set, get) => ({
   toggleShuffle: () => {
     const currentState = get();
     const newShuffleState = !currentState.isShuffling;
-    
+
     if (newShuffleState && currentState.queue.length > 0) {
       const currentSong = currentState.currentSong;
       const remainingSongs = currentState.queue.filter(
         (_, index) => index !== currentState.currentIndex
       );
-      
+
       const shuffledSongs = [...remainingSongs].sort(() => Math.random() - 0.5);
-      const newQueue = currentSong 
+      const newQueue = currentSong
         ? [currentSong, ...shuffledSongs]
         : shuffledSongs;
 
@@ -149,7 +149,7 @@ export const usePlayerStore = create<PlayerStore>((set, get) => ({
 
   playNext: () => {
     const { currentIndex, queue, isShuffling, isLooping, currentSong } = get();
-    
+
     if (queue.length === 0 || !currentSong) {
       set({ isPlaying: false });
       return;
@@ -160,18 +160,21 @@ export const usePlayerStore = create<PlayerStore>((set, get) => ({
     if (isLooping) {
       nextIndex = currentIndex;
     } else if (isShuffling) {
-      const availableSongs = queue.filter((_, index) => index !== currentIndex);
-      nextIndex = availableSongs.length > 0
-        ? queue.findIndex(song => song._id === 
-            availableSongs[Math.floor(Math.random() * availableSongs.length)]._id)
-        : currentIndex;
+      const remainingSongs = queue.filter((_, index) => index !== currentIndex);
+
+      if (remainingSongs.length === 0) {
+        nextIndex = currentIndex;
+      } else {
+        const randomSong = remainingSongs[Math.floor(Math.random() * remainingSongs.length)];
+        nextIndex = queue.findIndex(song => song._id === randomSong._id);
+      }
     } else {
       nextIndex = (currentIndex + 1) % queue.length;
     }
 
     const nextSong = queue[nextIndex];
     const socket = useChatStore.getState().socket;
-    
+
     set({
       currentSong: nextSong,
       currentIndex: nextIndex,
@@ -188,7 +191,7 @@ export const usePlayerStore = create<PlayerStore>((set, get) => ({
 
   playPrevious: () => {
     const { currentIndex, queue } = get();
-    
+
     if (queue.length === 0) {
       set({ isPlaying: false });
       return;
@@ -197,7 +200,7 @@ export const usePlayerStore = create<PlayerStore>((set, get) => ({
     const prevIndex = currentIndex <= 0 ? queue.length - 1 : currentIndex - 1;
     const prevSong = queue[prevIndex];
     const socket = useChatStore.getState().socket;
-    
+
     set({
       currentSong: prevSong,
       currentIndex: prevIndex,

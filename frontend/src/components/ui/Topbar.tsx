@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { useEffect, useState, useCallback } from "react";
 import { useMusicStore } from "@/stores/useMusicStore";
 import { debounce } from "lodash";
+import PremiumButton from "./PremiumButton";
 
 const Topbar = () => {
     const { isSignedIn } = useUser();
@@ -127,6 +128,7 @@ const Topbar = () => {
 
             <div className="flex items-center gap-4">
                 <SignedIn>
+                    <PremiumButton />
                     {isAdmin && (
                         <Link to="/admin" className={cn(buttonVariants({ variant: "outline" }))}>
                             <LayoutDashboardIcon className="size-4 mr-2" />

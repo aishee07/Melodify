@@ -19,6 +19,16 @@ const HomePage = () => {
     } = useMusicStore();
 
     const { initializeQueue } = usePlayerStore();
+
+    // Function to get time-based greeting
+    const getTimeBasedGreeting = () => {
+        const hour = new Date().getHours();
+        
+        if (hour < 12) return "Good Morning";
+        if (hour < 18) return "Good Afternoon";
+        if (hour < 20) return "Good Evening";
+        return "Good Night";
+    };
     
     useEffect(() => {
         fetchFeaturedSongs();
@@ -42,14 +52,16 @@ const HomePage = () => {
                         <>
                             <h1 className="text-2xl sm:text-3xl font-bold mb-6">Search Results</h1>
                             <SectionGrid 
-                                title="Search Results"  // Added title prop
+                                title="Search Results"
                                 songs={searchResults} 
                                 isLoading={isLoading} 
                             />
                         </>
                     ) : (
                         <>
-                            <h1 className="text-2xl sm:text-3xl font-bold mb-6">Good Afternoon</h1>
+                            <h1 className="text-2xl sm:text-3xl font-bold mb-6">
+                                {getTimeBasedGreeting()}
+                            </h1>
                             <FeaturedSection />
                             <div className="space-y-8">
                                 <SectionGrid 
