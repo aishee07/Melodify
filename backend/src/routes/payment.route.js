@@ -5,7 +5,11 @@ const router = express.Router();
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 router.post('/create-checkout-session', async (req, res) => {
-  const { email } = req.body;
+  const { email, priceId } = req.body; 
+
+  if (!email || !priceId) {
+    return res.status(400).json({ error: "Missing email or priceId" });
+  }
 
   try {
     const session = await stripe.checkout.sessions.create({
@@ -13,7 +17,7 @@ router.post('/create-checkout-session', async (req, res) => {
       mode: 'subscription',
       line_items: [
         {
-          price: "price_1ROvczCKUFlirSGa63Sa1xyI" , // ⚠️ Replace with your actual price ID
+          price: priceId, 
           quantity: 1,
         },
       ],

@@ -14,6 +14,7 @@ import { Toaster } from "react-hot-toast";
 import AudioPlayer from "./layout/components/AudioPlayer";
 import SubscriptionSuccess from "./pages/subscription/SubscriptionSuccess";
 import SubscriptionCancel from "./pages/subscription/SubscriptionCancel";
+import ChoosePlan from "@/pages/ChoosePlan";
 
 
 function App() {
@@ -42,6 +43,7 @@ function App() {
         />
         <Route path="/auth-callback" element={<AuthCallbackPage />} />
         <Route path="/admin" element={<AdminPage />} />
+        <Route path="/choose-plan" element={<ChoosePlan />} />
         <Route path="/subscription-success" element={<SubscriptionSuccess />} />
         <Route path="/subscription-cancel" element={<SubscriptionCancel />} />
 

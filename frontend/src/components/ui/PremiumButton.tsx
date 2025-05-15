@@ -1,48 +1,19 @@
 import { Button } from "@/components/ui/button";
-import { useAuth, useUser } from "@clerk/clerk-react";
-import { useState } from "react";
-import { Loader2 } from "lucide-react";
-import { axiosInstance } from "@/lib/axios";
-import { toast } from "react-hot-toast";
+import { useAuth } from "@clerk/clerk-react";
+import { useNavigate } from "react-router-dom";
 
 const PremiumButton = () => {
   const { isSignedIn } = useAuth();
-  const { user } = useUser();
-  const [isLoading, setIsLoading] = useState(false);
-
-  const handleUpgrade = async () => {
-    try {
-      setIsLoading(true);
-
-      const response = await axiosInstance.post("/payment/create-checkout-session", {
-        email: user?.primaryEmailAddress?.emailAddress,
-      });
-
-      window.location.href = response.data.url;
-    } catch (error) {
-      console.error("Payment error:", error);
-      toast.error("Failed to start payment. Please try again.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const navigate = useNavigate();
 
   if (!isSignedIn) return null;
 
   return (
-    <Button 
-      onClick={handleUpgrade}
-      disabled={isLoading}
+    <Button
+      onClick={() => navigate("/choose-plan")}
       className="ml-4 bg-gradient-to-r from-purple-600 to-pink-500 hover:from-purple-700 hover:to-pink-600 text-white"
     >
-      {isLoading ? (
-        <>
-          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-          Processing...
-        </>
-      ) : (
-        "Upgrade to Premium"
-      )}
+      Upgrade to Premium
     </Button>
   );
 };
