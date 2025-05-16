@@ -7,8 +7,8 @@ const SubscriptionSuccess = () => {
   const navigate = useNavigate();
 
   const handleGoHome = () => {
-    clearQueue();  // Reset player state fully
-    navigate("/"); // Client side navigation to Home
+    clearQueue();  
+    navigate("/"); 
   };
 
   return (
